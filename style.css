@@ -1,0 +1,96 @@
+/* colors to be used, aka color palette
+#E6E6C3 - cream white color bg
+#DE4124 - orange red for headings
+#6F807C - steel blue
+#A6BFBA - light pastel blue
+#FCFCE3 - offwhite for content box
+
+*/
+
+body {
+  background-color: #e1ddd9;
+  font-size: 12px;
+  font-family: Courier New, Courier, Monospace;
+  color:#FCFCE3;  
+  padding:5px;
+  margin:0px;
+  margin-top:15px;
+  text-align: center;
+  height:100%;
+}
+
+
+#content { 	
+    text-align: left;
+    vertical-align: middle;	
+    margin: 0px auto;
+    padding: 20px;
+    width: 550px;
+    background-color: #ffffff;
+    border: 1px dashed #564b47;
+    height:100%;
+}
+
+h1{
+    font-family: Verdana, Arial, Helvetica, SunSans-Regular, Sans-Serif;
+    color:#DE4124;
+    font-size:2.5em;
+}
+
+.subtitleFont{
+    font-size: 8pt;
+    font-family: Courier New, Courier, Monospace;
+    text-decoration:underline;
+    color:#000;
+}
+
+.footer{
+    font-size: 8pt;
+    font-family: Verdana, Arial, Helvetica, SunSans-Regular, Sans-Serif;
+    color:#000;
+    clear:both;
+}
+
+#mainTextbox{
+    width:50%;
+    height:300px;
+    float:left;
+      margin-bottom:20px;
+}
+
+.storyText{ /* box-sizing code provided by css-tricks.com. I would have never thought that getting a textarea to fill 100% would require -webkit or -moz */
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+    width:100%;
+    height:100%;
+  
+}
+
+#commandButtons{
+    width:48%;
+    height:100%;
+    float:right;
+
+
+}
+
+p.headings{
+    font-family: Verdana, Arial, Helvetica, SunSans-Regular, Sans-Serif;
+    color:#DE4124;
+    font-weight:bold;
+    font-size:2em;
+    text-align:center;
+    text-shadow: 1px 1px 1px #C0C0C0;
+}
+
+#score{
+    color:#000;
+    font-size:2.5em;
+    text-align:center;
+    text-shadow: 1px 1px 1px #000;
+}
+
+.scoreHead{
+  color:#6F807C;
+}
