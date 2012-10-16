@@ -66,12 +66,12 @@ function btn_goNorth(){
         updateLocation("northendLibrary");
         updateScore();
         addVisited("northendLibrary");
-        var setMsg = "You walk towards a bookcase opposite the door. Most of these books seem fairly old and have accumulated years of dust. However, one book seems to have been recently added to this library. It is titled 'Escaping' by J.K. Yowling.";
+        var setMsg = "You walk towards a bookcase opposite the door. Most of these books seem fairly old and have accumulated years of dust. However, one book seems to have been recently added to this library. It is titled 'Escaping' by Randy Butternuts.";
         updateDisplay(setMsg);
     }
     else if(currentLocation === "library" && hasVisited("northendLibrary") === true){
         updateLocation("northendLibrary");
-        var setMsg = "You walk towards a bookcase opposite the door. Most of these books seem fairly old and have accumulated years of dust. However, one book seems to have been recently added to this library. It is titled 'Escaping' by J.K. Yowling.";
+        var setMsg = "You walk towards a bookcase opposite the door. Most of these books seem fairly old and have accumulated years of dust. However, one book seems to have been recently added to this library. It is titled 'Escaping' by Randy Butternut.";
         updateDisplay(setMsg);
     }
     else{
@@ -83,11 +83,16 @@ function btn_goNorth(){
 
 function btn_goSouth(){
     var setMsg ="There is a double door at the end of the hallway. Several abstract paintings line the hallway. Some of these paintings are crooked.";
-    if(hasVisited("artHall") === false){
+    if(hasVisited("artHall") === false && currentLocation === "home"){
         updateScore();
         addVisited("artHall");
         updateDisplay(setMsg);
         updateLocation("artHall");
+    }
+    else if(currentLocation === "northendLibrary"){
+        var setMsg ="You enter a room lined with books and a small fireplace sits inside the opposite wall. A fine Persian carpet fills the floor and the air is musky. It seems like no one has been in this room for a while.";
+        updateDisplay(setMsg);
+        updateLocation("library");
     }
     else{
         updateDisplay(setMsg);
