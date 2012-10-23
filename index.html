@@ -6,15 +6,16 @@
   	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="author" content="David Gunter">
     <link href="style.css" rel="stylesheet" type="text/css" /> 
+    <script src="locations.js"></script> <!-- import locations js file -->
     <script src="script.js"></script>   <!-- grab the javascript file-->
 </head>
-<body>
+<body onload="init()">
 
     <div id="content">
         <h1>Chip Chap <span class="subtitleFont">A text adventure game</span>  </h1> 
     
         <div id="mainTextbox">
-            <textarea class="storyText" id="storyText">You wake up on plush carpet in a sparsely decorated room. You don't recognize where you are and feel uneased by how quiet it is. Looking around, you see 4 different ways out of this room. Perhaps someone else is here...</textarea><br>
+            <textarea class="storyText" id="storyText"></textarea><br>
         </div>
         
         <div id="commandButtons">

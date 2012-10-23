@@ -4,6 +4,12 @@ var vistedLocs = []; //create array to record where player has visited. Updated 
 
 var currentLocation = "home"; //current location of the user. Initialized as home.
 
+//the init() function is called from the body when it loads. It will set the initial text inside the output textarea
+function init(){
+    var txtBox = document.getElementById("storyText");
+    txtBox.value = "You wake up on plush carpet in a sparsely decorated room. You don't recognize where you are and feel uneased by how quiet it is. Looking around, you see 4 different ways out of this room. Perhaps someone else is here...";
+}
+
 function updateScore(setPoints){
                 
     var addPoints; // value of points to be added to player's score
@@ -56,97 +62,59 @@ Following 4 functions are called when the user presses buttons representing nort
 function btn_goNorth(){
     
     if(hasVisited("library") === false && currentLocation === "home"){
-        var setMsg ="You enter a room lined with books and a small fireplace sits inside the opposite wall. A fine Persian carpet fills the floor and the air is musky. It seems like no one has been in this room for a while.";
+        libraryMain();
         updateScore();
-        addVisited("library");
-        updateDisplay(setMsg);
-        updateLocation("library");
     }
     else if(currentLocation === "library" && hasVisited("northendLibrary") === false){
-        updateLocation("northendLibrary");
-        updateScore();
-        addVisited("northendLibrary");
-        var setMsg = "You walk towards a bookcase opposite the door. Most of these books seem fairly old and have accumulated years of dust. However, one book seems to have been recently added to this library. It is titled 'Escaping' by Randy Butternuts.";
-        updateDisplay(setMsg);
+         northEndLibrary();
+         updateScore();
     }
     else if(currentLocation === "library" && hasVisited("northendLibrary") === true){
-        updateLocation("northendLibrary");
-        var setMsg = "You walk towards a bookcase opposite the door. Most of these books seem fairly old and have accumulated years of dust. However, one book seems to have been recently added to this library. It is titled 'Escaping' by Randy Butternut.";
-        updateDisplay(setMsg);
+         northEndLibrary();
     }
     else{
-        var setMsg ="You enter a room lined with books and a small fireplace sits inside the opposite wall. A fine Persian carpet fills the floor and the air is musky. It seems like no one has been in this room for a while.";
-        updateDisplay(setMsg);
-        updateLocation("library");
+         libraryMain();
     }
 }
 
 function btn_goSouth(){
-    var setMsg ="There is a double door at the end of the hallway. Several abstract paintings line the hallway. Some of these paintings are crooked.";
-    if(hasVisited("artHall") === false && currentLocation === "home"){
-        updateScore();
-        addVisited("artHall");
-        updateDisplay(setMsg);
-        updateLocation("artHall");
+    
+    if(currentLocation === "northendLibrary"){
+         libraryMain();
     }
-    else if(currentLocation === "northendLibrary"){
-        var setMsg ="You enter a room lined with books and a small fireplace sits inside the opposite wall. A fine Persian carpet fills the floor and the air is musky. It seems like no one has been in this room for a while.";
-        updateDisplay(setMsg);
-        updateLocation("library");
+    else if(hasVisited("artHall") === false && currentLocation === "home"){
+        artHall();
+        updateScore();
     }
     else{
-        updateDisplay(setMsg);
-        updateLocation("artHall");
+        artHall();
     }
 }
 
 function btn_goEast(){
-    var setMsg ="You face a small window with cast iron bars welded to the outside. There is a piece of paper taped to the window.";
+    
     if(hasVisited("windowWall") === false){
         updateScore();
-        addVisited("windowWall");
-        updateDisplay(setMsg);
-        updateLocation("windowWall");
+        windowWall();
+
     }
     else{
-        updateDisplay(setMsg);
-        updateLocation("windowWall");
+        windowWall();
     }
 }
 
 function btn_goWest(){
-        var setMsg ="You enter an immaculate kitchen with white walls and a linoleum floor. There is a small cellar door next to the counter. \n\n **HINT: The next step requires textbox input!**";
     if(hasVisited("kitchen") === false){ //have they visited the kitchen? If not, add to their score. If they have visited, do not add points to their score. 
         updateScore();
-        addVisited("kitchen");
-        updateDisplay(setMsg);
-        updateLocation("kitchen");
+        kitchen();
+
     }
     else{
-         updateDisplay(setMsg);
-         updateLocation("kitchen");
+        kitchen();
     }
 }   
 
-//enter cellar if and ONLY IF they are in the kitchen. If they are not coming from the kitchen, throw invalid command error
-function enterCellar(){ 
-     var setMsg = "You open the door and descend the stairs to the cellar. The cellar has a dirt floor and rotten wooden posts supporting the ceiling. Suddenly, a growling dog approaches you. He doesn't seem friendly!";
-    if(hasVisited("cellar") === false && currentLocation === "kitchen"){
-        updateScore(10);
-        addVisited("cellar");
-        updateDisplay(setMsg);
-        updateLocation("cellar");
-    }
-    else if(currentLocation === "kitchen" && hasVisited("cellar") === true){
-        currentLocation = "cellar";
-        updateDisplay(setMsg);
-    }
-    else if (currentLocation != "kitchen"){
-        setMsg = "Invalid command. Please try another command.";
-        updateDisplay(setMsg);
-    }
-    
-}
+
 
 function listCommands(){
     var setMsg = "Here are some valid commands: \n\n Directions can be written as the full word, North, or as the first letter, N. Action commands to go to certain areas follow the syntax 'enter ____' ";
@@ -214,3 +182,4 @@ function enterCommand(){
     //now let's clear out the command box 
     document.getElementById("commandBox").value = "";
 }
+
