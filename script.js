@@ -2,7 +2,11 @@ var score = 0; //initialize player score variable
 
 var vistedLocs = []; //create array to record where player has visited. Updated via addVisited()
 
+var inventory = []; //initialize the inventory for the user
+
 var currentLocation = "home"; //current location of the user. Initialized as home.
+
+
 
 //the init() function is called from the body when it loads. It will set the initial text inside the output textarea
 function init(){
@@ -54,7 +58,50 @@ function updateDisplay(message){ //fuction to add new text to textbox
     txtBox.value = msg + "\n\n" + txtBox.value; //append new message to textbox
 }
 
+//updateInvetory will take the item name and either add it to the inventory array if action = add or delete if action = delete
+function updateInventory(item, action){
 
+    switch(action){
+
+        case "add":
+            inventory.push(item);
+            break;
+
+        case "delete":
+
+            //taken and modified from StackOverflow.com 
+            //this loop search through the array inventory looking for the value of "item". When found, it deletes the item.
+            for(var i in inventory){ 
+                if(inventory[i] === item){
+                array.splice(i,1);
+                break;
+                }
+            }    
+            break;
+
+            // var invIndex = inventory.indexOf(item);
+            //    if (invIndex !=-1){
+            //        inventory.splice(invIndex)
+            //    }
+
+        default:
+            setMsg = "Error encountered. Please try again.";
+            updateDisplay(setMsg);
+            break;
+    }
+
+}
+
+function hasItem(item){
+  
+    if(inventory.indexOf(item) != -1){ //find if user has item passed to function
+        return true;
+    }
+    else{
+        return false;
+    }
+
+}
 
 /*
 Following 4 functions are called when the user presses buttons representing north, south, east, or west. Text is then input into textarea. 
@@ -104,7 +151,14 @@ function btn_goEast(){
 }
 
 function btn_goWest(){
-    if(hasVisited("kitchen") === false){ //have they visited the kitchen? If not, add to their score. If they have visited, do not add points to their score. 
+    if(currentLocation === "artHall" && hasVisited("painting") === false){
+        viewPainting();
+        updateScore(15);
+    }
+    else if(currentLocation === "artHall" && hasVisited("painting") === false){
+        viewPainting();
+    }
+    else if(currentLocation === "home" && hasVisited("kitchen") === false){ //have they visited the kitchen? If not, add to their score. If they have visited, do not add points to their score. 
         updateScore();
         kitchen();
 
@@ -114,7 +168,17 @@ function btn_goWest(){
     }
 }   
 
+function takePaper(){
+    var setMsg = "You take the paper and read it. It seems to be a crudely drawn map of some location. Maybe it's for this house?";
+    updateDisplay(setMsg);
 
+    //add map to inventory
+    var item = "map";
+    var action = "add";
+    updateInventory(item, action);
+
+
+}
 
 function listCommands(){
     var setMsg = "Here are some valid commands: \n\n Directions can be written as the full word, North, or as the first letter, N. Action commands to go to certain areas follow the syntax 'enter ____' ";
@@ -122,7 +186,7 @@ function listCommands(){
 }
 
 function enterCommand(){
-    var validCommands = ["north","south","east","west","n","s","e","w","enter cellar","commands"];
+    var validCommands = ["north","south","east","west","n","s","e","w","enter cellar","commands", "take paper"];
     var inputCmd = document.getElementById("commandBox").value; //set command to the value that was entered in commandBox
 
     if(validCommands.indexOf(inputCmd.toLowerCase()) != -1){ //convert string to lowercase, then determine if command is valid by searching validCommands array
@@ -168,8 +232,12 @@ function enterCommand(){
                 listCommands();
                 break;
 
+            case "take paper":
+                takePaper();
+                break;
+
             default:
-                setMsg="Please select a direction. If you need help, enter 'commands' without quotes in the input box.";
+                setMsg="Invalid command. If you need help, enter 'commands' without quotes in the input box.";
                 updateDisplay(setMsg);
         }
 

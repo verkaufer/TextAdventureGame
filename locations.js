@@ -24,7 +24,14 @@ function artHall(){
 }
 
 function windowWall(){
-    var setMsg ="You face a small window with cast iron bars welded to the outside. There is a piece of paper taped to the window.";
+
+    if(hasItem('map')){
+        var setMsg ="You face a small window with cast iron bars welded to the outside. There is tape residue from the map you took.";
+    }
+    else{
+        var setMsg ="You face a small window with cast iron bars welded to the outside. There is a piece of paper taped to the window.";
+    }
+    
     addVisited("windowWall");
     updateDisplay(setMsg);
     updateLocation("windowWall");
@@ -36,6 +43,13 @@ function kitchen(){
     updateDisplay(setMsg);
     updateLocation("kitchen");
 
+}
+
+function viewPainting(){
+    var setMsg = "You turn and look at the crooked painting. It's a family portrait, but none of these people have faces. The exposed wall where the painting is tilted away from seems a lot cleaner than the rest of the wall...";
+    updateDisplay(setMsg);
+    addVisited("painting");
+    updateLocation("painting");
 }
 
 //enter cellar if and ONLY IF they are in the kitchen. If they are not coming from the kitchen, throw invalid command error
