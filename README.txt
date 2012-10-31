@@ -5,10 +5,10 @@ This project is a text adventure game created over a semester in Intro to Softwa
 
 The game utilizes several key facets of web development:
 * Javascript/ECMAScript
-*jQuery
-*HTML5
-    *Validated by W3
-*CSS
+* jQuery
+* HTML5
+    * Validated by W3
+* CSS
 
 Suggestions are always welcome and I am interested in making this game as efficient as possible.
 
