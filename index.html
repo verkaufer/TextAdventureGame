@@ -6,11 +6,12 @@
   	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="author" content="David Gunter">
     <link href="style.css" rel="stylesheet" type="text/css" /> 
+    <script src="http://code.jquery.com/jquery-latest.js"></script> <!-- get jQuery -->
     <script src="locations.js"></script> <!-- import locations js file -->
     <script src="script.js"></script>   <!-- grab the javascript file-->
 </head>
 <body onload="init()">
-
+    
     <div id="content">
         <h1>Chip Chap <span class="subtitleFont">A text adventure game</span>  </h1> 
     
@@ -19,10 +20,10 @@
         </div>
         
         <div id="commandButtons">
-            <button type="button" onclick="btn_goNorth()">North</button>&nbsp;
-            <button type="button" onclick="btn_goEast()">East</button><br>
-            <button type="button" onclick="btn_goSouth()">South</button>&nbsp; 
-            <button type="button" onclick="btn_goWest()">West</button><br>
+            <button type="button" id="northButton" onclick="btn_goNorth()">North</button>&nbsp;
+            <button type="button" id="eastButton" onclick="btn_goEast()">East</button><br>
+            <button type="button" id="southButton" onclick="btn_goSouth()">South</button>&nbsp; 
+            <button type="button" id="westButton" onclick="btn_goWest()">West</button><br>
              
              <p class="headings">
                 <span class = "scoreHead">Your score:</span>
@@ -32,7 +33,7 @@
                 0
             </div>
 
-            <div id="push"><h2>Inventory</h2></div>
+            <div id="push"></div>
 
             <div id="inputCommands">
 
@@ -43,9 +44,24 @@
                
         </div>
 
+
+
+        <div id="inventory">
+            <h4>Inventory <img src="./plus.png" id="expand" alt="expand"/></h4>
+            <ul>
+            <p id="invBox"></p>
+        </ul>
+        </div>
+
+
         <p class="footer">
+
         If you encounter any errors or you need a hint, email me at <a href="mailto:david.gunter1@marist.edu">david.gunter1@marist.edu</a>
         </p>
+
+        <!-- begin inventory side-box -->
+
+        <!-- end inventory box -->
     </div>
 
 

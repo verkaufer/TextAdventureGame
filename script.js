@@ -1,3 +1,14 @@
+//jquery effects code
+  $(document).ready(function(){
+    
+    $("#expand").click(function () {
+      $("#invBox").slideToggle("fast");
+    });
+
+  });
+
+//end jQuery effects code
+
 var score = 0; //initialize player score variable
 
 var vistedLocs = []; //create array to record where player has visited. Updated via addVisited()
@@ -5,7 +16,6 @@ var vistedLocs = []; //create array to record where player has visited. Updated 
 var inventory = []; //initialize the inventory for the user
 
 var currentLocation = "home"; //current location of the user. Initialized as home.
-
 
 
 //the init() function is called from the body when it loads. It will set the initial text inside the output textarea
@@ -89,6 +99,12 @@ function updateInventory(item, action){
             updateDisplay(setMsg);
             break;
     }
+
+}
+
+function updateInventoryDisplay(newItem){
+
+    $("#invBox").append("<li>"+newItem+"</li>");
 
 }
 
@@ -176,6 +192,42 @@ function takePaper(){
     var item = "map";
     var action = "add";
     updateInventory(item, action);
+    updateInventoryDisplay(item);
+
+
+}
+
+//called to enable all the directions
+function enableAllDirections(){
+    
+     $('#northButton').attr('disabled', '');
+     $('#southButton').attr('disabled', '');
+     $('#eastButton').attr('disabled', '');
+     $('#westButton').attr('disabled', '');
+
+}
+
+//disables a direction one at a time via jQuery
+function disableDirection(dir){
+
+    switch(dir){
+
+        case "north":
+            $('#northButton').attr('disabled', 'disabled');
+            break;
+        case "south":
+            $('#southButton').attr('disabled', 'disabled');
+            break;
+        case "east":
+            $('#eastButton').attr('disabled', 'disabled');
+            break;
+        case "west":
+            $('#westButton').attr('disabled', 'disabled');
+            break;
+        default:
+            $('#northButton').attr('disabled', 'disabled');
+            break;
+    }
 
 
 }
@@ -186,7 +238,7 @@ function listCommands(){
 }
 
 function enterCommand(){
-    var validCommands = ["north","south","east","west","n","s","e","w","enter cellar","commands", "take paper"];
+    var validCommands = ["north","south","east","west","n","s","e","w","enter cellar","commands", "take paper", "view viewPainting"];
     var inputCmd = document.getElementById("commandBox").value; //set command to the value that was entered in commandBox
 
     if(validCommands.indexOf(inputCmd.toLowerCase()) != -1){ //convert string to lowercase, then determine if command is valid by searching validCommands array
@@ -236,6 +288,9 @@ function enterCommand(){
                 takePaper();
                 break;
 
+            case "view painting":
+                viewPainting();
+                break;
             default:
                 setMsg="Invalid command. If you need help, enter 'commands' without quotes in the input box.";
                 updateDisplay(setMsg);

@@ -31,10 +31,38 @@ body {
     height:100%;
 }
 
+#inventory{
+  width: 80%px;
+  background-color: #fff;
+  clear:both;
+}
+
+#inventory p{
+  color:#000;
+  border:1px dashed #000;
+  padding:5px;
+  display:none;
+
+}
+
+/* 
+see this page for details http://robertnyman.com/2010/02/24/css-display-inline-block-why-it-rocks-and-why-it-sucks/
+*/
+ul#inventory li{
+  display:inline-block;
+  list-style:none;
+}
+
 h1{
     font-family: Verdana, Arial, Helvetica, SunSans-Regular, Sans-Serif;
     color:#DE4124;
     font-size:2.5em;
+}
+
+h4{
+  font-family: Verdana, Arial, Helvetica, SunSans-Regular, Sans-Serif;
+  font-size:1.5em;
+  color:#000;
 }
 
 .subtitleFont{
@@ -96,5 +124,5 @@ p.headings{
 }
 
 #push{
-  height:100px;
+  height:115px;
 }
