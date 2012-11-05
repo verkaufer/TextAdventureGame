@@ -5,6 +5,11 @@
       $("#invBox").slideToggle("fast");
     });
 
+    //following is necessary to remove disable attribute when loading the page
+     $('#northButton').removeAttr('disabled');
+     $('#southButton').removeAttr('disabled');
+     $('#eastButton').removeAttr('disabled');
+     $('#westButton').removeAttr('disabled');
   });
 
 //end jQuery effects code
@@ -102,12 +107,23 @@ function updateInventory(item, action){
 
 }
 
-function updateInventoryDisplay(newItem){
+//updates #invBox div with new item 
+function updateInventoryDisplay(newItem, action){
 
-    $("#invBox").append("<li>"+newItem+"</li>");
+    if(action === "add" && newItem === "map"){
+        $("#invBox").append("<span id='"+newItem+"' class='item' onClick='popupMap()'>"+newItem+"</span>");
+    }
+    else if(action === "add"){
+         $("#invBox").append("<span id='"+newItem+"' class='item'>"+newItem+"</span>");
+    }
+    else{ //delete the item
+        $("#"+newItem+"").remove();
+    }
+
 
 }
 
+//checks if user has the item passed to the function
 function hasItem(item){
   
     if(inventory.indexOf(item) != -1){ //find if user has item passed to function
@@ -118,6 +134,45 @@ function hasItem(item){
     }
 
 }
+
+//called to enable all the directions
+function enableAllDirections(){
+    
+     $('#northButton').removeAttr('disabled');
+     $('#southButton').removeAttr('disabled');
+     $('#eastButton').removeAttr('disabled');
+     $('#westButton').removeAttr('disabled');
+
+}
+
+//disables a direction one at a time via jQuery
+function disableDirection(dir){
+
+    switch(dir){
+
+        case "north":
+            $('#northButton').attr('disabled', 'disabled');
+            break;
+        case "south":
+            $('#southButton').attr('disabled', 'disabled');
+            break;
+
+        case "east":
+            $('#eastButton').attr('disabled', 'disabled');
+            break;
+
+        case "west":
+            $('#westButton').attr('disabled', 'disabled');
+            break;
+
+        default:
+            $("#northButton");
+            break;
+    }
+
+
+}
+
 
 /*
 Following 4 functions are called when the user presses buttons representing north, south, east, or west. Text is then input into textarea. 
@@ -135,6 +190,9 @@ function btn_goNorth(){
     else if(currentLocation === "library" && hasVisited("northendLibrary") === true){
          northEndLibrary();
     }
+    else if(currentLocation === "artHall" || currentLocation === "painting"){
+        startingLocation();
+    }
     else{
          libraryMain();
     }
@@ -144,6 +202,9 @@ function btn_goSouth(){
     
     if(currentLocation === "northendLibrary"){
          libraryMain();
+    }
+    else if(currentLocation === "library"){
+        startingLocation();
     }
     else if(hasVisited("artHall") === false && currentLocation === "home"){
         artHall();
@@ -155,29 +216,35 @@ function btn_goSouth(){
 }
 
 function btn_goEast(){
-    
-    if(hasVisited("windowWall") === false){
+        
+    if(currentLocation === "kitchen"){
+        startingLocation();
+    }
+    else if(currentLocation === "artHall" && hasVisited("painting") === false){
+        viewPainting();
+        updateScore(15);
+    }
+    else if(currentLocation === "artHall"){
+
+        viewPainting();
+    }
+    else if(currentLocation === "home" && hasVisited("windowWall") === false){
         updateScore();
         windowWall();
-
     }
     else{
         windowWall();
+
     }
 }
 
 function btn_goWest(){
-    if(currentLocation === "artHall" && hasVisited("painting") === false){
-        viewPainting();
-        updateScore(15);
-    }
-    else if(currentLocation === "artHall" && hasVisited("painting") === false){
-        viewPainting();
+    if(currentLocation === "windowWall"){
+        startingLocation();
     }
     else if(currentLocation === "home" && hasVisited("kitchen") === false){ //have they visited the kitchen? If not, add to their score. If they have visited, do not add points to their score. 
         updateScore();
         kitchen();
-
     }
     else{
         kitchen();
@@ -185,52 +252,46 @@ function btn_goWest(){
 }   
 
 function takePaper(){
-    var setMsg = "You take the paper and read it. It seems to be a crudely drawn map of some location. Maybe it's for this house?";
-    updateDisplay(setMsg);
 
-    //add map to inventory
-    var item = "map";
-    var action = "add";
-    updateInventory(item, action);
-    updateInventoryDisplay(item);
+    if(currentLocation === "windowWall"){
+        var setMsg = "You take the paper and read it. It seems to be a crudely drawn map of some location. Maybe it's for this house?";
+        updateDisplay(setMsg);
 
-
-}
-
-//called to enable all the directions
-function enableAllDirections(){
-    
-     $('#northButton').attr('disabled', '');
-     $('#southButton').attr('disabled', '');
-     $('#eastButton').attr('disabled', '');
-     $('#westButton').attr('disabled', '');
-
-}
-
-//disables a direction one at a time via jQuery
-function disableDirection(dir){
-
-    switch(dir){
-
-        case "north":
-            $('#northButton').attr('disabled', 'disabled');
-            break;
-        case "south":
-            $('#southButton').attr('disabled', 'disabled');
-            break;
-        case "east":
-            $('#eastButton').attr('disabled', 'disabled');
-            break;
-        case "west":
-            $('#westButton').attr('disabled', 'disabled');
-            break;
-        default:
-            $('#northButton').attr('disabled', 'disabled');
-            break;
+        //add map to inventory
+        var item = "map";
+        var action = "add";
+        updateInventory(item, action);
+        updateInventoryDisplay(item, action);
+    }
+    else{
+        var setMsg = "You can't do that here!";
+        updateDisplay(setMsg);
     }
 
 
+
 }
+
+function takePainting(){
+
+    if(currentLocation === "painting"){
+        var setMsg = "You take the crooked painting off the wall. There was a tunnel behind it!";
+        updateDisplay(setMsg);
+
+        //add painting to inventory
+        var item = "painting";
+        var action = "add";
+        updateInventory(item, action);
+        updateInventoryDisplay(item, action);
+    }
+    else{
+        setMsg = "You can't do that here!";
+        updateDisplay(setMsg);
+    }
+
+  
+}
+
 
 function listCommands(){
     var setMsg = "Here are some valid commands: \n\n Directions can be written as the full word, North, or as the first letter, N. Action commands to go to certain areas follow the syntax 'enter ____' ";
@@ -238,7 +299,7 @@ function listCommands(){
 }
 
 function enterCommand(){
-    var validCommands = ["north","south","east","west","n","s","e","w","enter cellar","commands", "take paper", "view viewPainting"];
+    var validCommands = ["north","south","east","west","n","s","e","w","enter cellar","commands", "take paper", "view painting", "exit cellar", "take painting"];
     var inputCmd = document.getElementById("commandBox").value; //set command to the value that was entered in commandBox
 
     if(validCommands.indexOf(inputCmd.toLowerCase()) != -1){ //convert string to lowercase, then determine if command is valid by searching validCommands array
@@ -291,6 +352,15 @@ function enterCommand(){
             case "view painting":
                 viewPainting();
                 break;
+
+            case "exit cellar":
+                exitCellar();
+                break;
+
+            case "take painting":
+                takePainting();
+                break;
+
             default:
                 setMsg="Invalid command. If you need help, enter 'commands' without quotes in the input box.";
                 updateDisplay(setMsg);
@@ -306,3 +376,7 @@ function enterCommand(){
     document.getElementById("commandBox").value = "";
 }
 
+function popupMap(){
+    window.open( "game_map.png", "myWindow", 
+    "status = 1, height = 300, width = 300, resizable = 0" );
+}

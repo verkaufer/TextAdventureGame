@@ -45,12 +45,8 @@ body {
 
 }
 
-/* 
-see this page for details http://robertnyman.com/2010/02/24/css-display-inline-block-why-it-rocks-and-why-it-sucks/
-*/
-ul#inventory li{
-  display:inline-block;
-  list-style:none;
+.item{
+  padding-left: 25px;
 }
 
 h1{

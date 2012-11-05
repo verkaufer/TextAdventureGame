@@ -2,11 +2,23 @@
 // these functions are assigned to one location each
 */
 
+function startingLocation(){
+        var setMsg = "You wake up on plush carpet in a sparsely decorated room. You don't recognize where you are and feel uneased by how quiet it is. Looking around, you see 4 different ways out of this room. Perhaps someone else is here...";
+        updateDisplay(setMsg);
+        updateLocation("home");
+        enableAllDirections();
+}
+
 function libraryMain(){
         var setMsg ="You enter a room lined with books and a small fireplace sits inside the opposite wall. A fine Persian carpet fills the floor and the air is musky. It seems like no one has been in this room for a while.";
         addVisited("library");
         updateDisplay(setMsg);
         updateLocation("library");
+
+        //deals with enable/disabling direction buttons
+        enableAllDirections();
+        disableDirection("west");
+        disableDirection("east");
 }
 
 function northEndLibrary(){
@@ -14,6 +26,12 @@ function northEndLibrary(){
         updateDisplay(setMsg);
         updateLocation("northendLibrary");
         addVisited("northendLibrary");
+
+ //deals with enable/disabling direction buttons
+        enableAllDirections();
+        disableDirection("east");
+        disableDirection("west");
+        disableDirection("north");
 }
 
 function artHall(){
@@ -21,6 +39,10 @@ function artHall(){
     addVisited("artHall");
     updateDisplay(setMsg);
     updateLocation("artHall");
+
+     //deals with enable/disabling direction buttons
+    enableAllDirections();
+    disableDirection("west");
 }
 
 function windowWall(){
@@ -35,6 +57,12 @@ function windowWall(){
     addVisited("windowWall");
     updateDisplay(setMsg);
     updateLocation("windowWall");
+
+ //deals with enable/disabling direction buttons
+    enableAllDirections();
+    disableDirection("south");
+    disableDirection("north");
+    disableDirection("east");
 }
 
 function kitchen(){
@@ -43,6 +71,12 @@ function kitchen(){
     updateDisplay(setMsg);
     updateLocation("kitchen");
 
+ //deals with enable/disabling direction buttons
+    enableAllDirections();
+    disableDirection("north");
+    disableDirection("south");
+    disableDirection("west");
+
 }
 
 function viewPainting(){
@@ -50,20 +84,41 @@ function viewPainting(){
     updateDisplay(setMsg);
     addVisited("painting");
     updateLocation("painting");
+
+ //deals with enable/disabling direction buttons
+    enableAllDirections();
+    disableDirection("east");
+    disableDirection("west");
 }
 
 //enter cellar if and ONLY IF they are in the kitchen. If they are not coming from the kitchen, throw invalid command error
 function enterCellar(){ 
      var setMsg = "You open the door and descend the stairs to the cellar. The cellar has a dirt floor and rotten wooden posts supporting the ceiling. Suddenly, a growling dog approaches you. He doesn't seem friendly!";
     if(hasVisited("cellar") === false && currentLocation === "kitchen"){
+        enableAllDirections();
         updateScore(10);
         addVisited("cellar");
         updateDisplay(setMsg);
         updateLocation("cellar");
+
+         //deals with enable/disabling direction buttons
+        disableDirection("north");
+        disableDirection("south");
+        disableDirection("west");
+        disableDirection("east");
+
     }
     else if(currentLocation === "kitchen" && hasVisited("cellar") === true){
         currentLocation = "cellar";
+        enableAllDirections();
         updateDisplay(setMsg);
+        updateLocation("cellar");
+
+         //deals with enable/disabling direction buttons
+        disableDirection("north");
+        disableDirection("south");
+        disableDirection("west");
+        disableDirection("east");
     }
     else if (currentLocation != "kitchen"){
         setMsg = "Invalid command. Please try another command.";
@@ -71,3 +126,14 @@ function enterCellar(){
     }
     
 }
+
+function exitCellar(){
+    if(currentLocation === "cellar"){
+        kitchen();
+    }
+    else{
+        setMsg = "You can't do that yet! Please try another command.";
+        updateDisplay(setMsg);
+    }
+}
+
