@@ -291,6 +291,10 @@ function takePainting(){
         updateScore(15);
         updateDisplay(setMsg);
 
+        //enable/disable directions
+        enableAllDirections();
+        disableDirection("west");
+
         //add painting to inventory
         var item = "painting";
         var action = "add";
