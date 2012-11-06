@@ -190,6 +190,9 @@ function btn_goNorth(){
     else if(currentLocation === "library" && hasVisited("northendLibrary") === true){
          northEndLibrary();
     }
+    else if(currentLocation === "southArtHallway"){
+        artHall();
+    }
     else if(currentLocation === "artHall" || currentLocation === "painting"){
         startingLocation();
     }
@@ -210,6 +213,9 @@ function btn_goSouth(){
         artHall();
         updateScore();
     }
+    else if(currentLocation === "artHall" || currentLocation === "painting"){
+        southArtHallway();
+    }
     else{
         artHall();
     }
@@ -228,6 +234,9 @@ function btn_goEast(){
 
         viewPainting();
     }
+    else if (currentLocation === "painting"){
+        tunnel();
+    }
     else if(currentLocation === "home" && hasVisited("windowWall") === false){
         updateScore();
         windowWall();
@@ -242,6 +251,9 @@ function btn_goWest(){
     if(currentLocation === "windowWall"){
         startingLocation();
     }
+    else if(currentLocation === "tunnel"){
+        viewPainting();
+    }
     else if(currentLocation === "home" && hasVisited("kitchen") === false){ //have they visited the kitchen? If not, add to their score. If they have visited, do not add points to their score. 
         updateScore();
         kitchen();
@@ -253,7 +265,7 @@ function btn_goWest(){
 
 function takePaper(){
 
-    if(currentLocation === "windowWall"){
+    if(currentLocation === "windowWall" && !hasItem("map")){
         var setMsg = "You take the paper and read it. It seems to be a crudely drawn map of some location. Maybe it's for this house?";
         updateDisplay(setMsg);
 
@@ -274,8 +286,9 @@ function takePaper(){
 
 function takePainting(){
 
-    if(currentLocation === "painting"){
+    if(currentLocation === "painting" && !hasItem("painting")){
         var setMsg = "You take the crooked painting off the wall. There was a tunnel behind it!";
+        updateScore(15);
         updateDisplay(setMsg);
 
         //add painting to inventory
@@ -292,6 +305,22 @@ function takePainting(){
   
 }
 
+function takeKey(){
+    if(currentLocation === "tunnel" && !hasItem("key")){
+        var setMsg = "You take the skeleton key. It has the word 'escape' engraved on the handle and looks quite old.";
+        updateScore(20);
+        updateDisplay(setMsg);
+
+        var item = "key";
+        var action = "add";
+        updateInventory(item, action);
+        updateInventoryDisplay(item, action);
+    }
+    else{
+        setMsg = "You can't do that here! There aren't any keys to pick up, doofus!";
+        updateDisplay(setMsg);
+    }
+}
 
 function listCommands(){
     var setMsg = "Here are some valid commands: \n\n Directions can be written as the full word, North, or as the first letter, N. Action commands to go to certain areas follow the syntax 'enter ____' ";
@@ -299,7 +328,7 @@ function listCommands(){
 }
 
 function enterCommand(){
-    var validCommands = ["north","south","east","west","n","s","e","w","enter cellar","commands", "take paper", "view painting", "exit cellar", "take painting"];
+    var validCommands = ["north","south","east","west","n","s","e","w","enter cellar","commands", "take paper", "view painting", "exit cellar", "take painting", "take key"];
     var inputCmd = document.getElementById("commandBox").value; //set command to the value that was entered in commandBox
 
     if(validCommands.indexOf(inputCmd.toLowerCase()) != -1){ //convert string to lowercase, then determine if command is valid by searching validCommands array
@@ -361,9 +390,14 @@ function enterCommand(){
                 takePainting();
                 break;
 
+            case "take key":
+                takeKey();
+                break;
+
             default:
                 setMsg="Invalid command. If you need help, enter 'commands' without quotes in the input box.";
                 updateDisplay(setMsg);
+                break;
         }
 
     }

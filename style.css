@@ -49,6 +49,10 @@ body {
   padding-left: 25px;
 }
 
+#map{
+  text-decoration: underline;
+}
+
 h1{
     font-family: Verdana, Arial, Helvetica, SunSans-Regular, Sans-Serif;
     color:#DE4124;

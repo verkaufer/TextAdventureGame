@@ -35,7 +35,7 @@ function northEndLibrary(){
 }
 
 function artHall(){
-    var setMsg ="There is a double door at the end of the hallway. Several abstract paintings line the hallway. Some of these paintings are crooked.";
+    var setMsg ="There is a double door at the end of the hallway. Several abstract paintings line the hallway. One of these paintings is crooked.";
     addVisited("artHall");
     updateDisplay(setMsg);
     updateLocation("artHall");
@@ -80,6 +80,17 @@ function kitchen(){
 }
 
 function viewPainting(){
+
+    if(hasItem("painting")){
+        var setMsg = "You view the tunnel that was behind the painting you removed from the wall. Maybe you should explore it.";
+        updateDisplay(setMsg);
+
+        enableAllDirections();
+        disableDirection("west");
+        updateLocation("painting");
+
+    }
+    else{
     var setMsg = "You turn and look at the crooked painting. It's a family portrait, but none of these people have faces. The exposed wall where the painting is tilted away from seems a lot cleaner than the rest of the wall...";
     updateDisplay(setMsg);
     addVisited("painting");
@@ -89,7 +100,60 @@ function viewPainting(){
     enableAllDirections();
     disableDirection("east");
     disableDirection("west");
+    }
 }
+
+//tunnel that is hidden behind the painting
+function tunnel(){
+
+    if(!hasItem("key")){
+        var setMsg = "This tunel seems well excavated. There are even lamps on the walls! The lights turn on and you notice that there's a key in front of you.";
+        updateDisplay(setMsg);
+        updateLocation("tunnel");
+
+        //do some button enabling/disabling
+        enableAllDirections();
+        disableDirection("south");
+        disableDirection("north");
+        disableDirection("east");
+     }
+     else{
+        var setMsg = "This tunel seems well excavated. There are even lamps on the walls! The lights turn on and there's nothing else here.";
+        updateDisplay(setMsg);
+        updateLocation("tunnel");
+
+        //do some button enabling/disabling
+        enableAllDirections();
+        disableDirection("south");
+        disableDirection("north");
+        disableDirection("east");
+     }
+
+}
+
+function southArtHallway(){
+    var setMsg = "You approach the double door at the end of the hall. It's ornately decorated with gold leaf inlays and the door handles are antique gold. The door's locked, so you need a key.";
+    updateDisplay(setMsg);
+    updateLocation("southArtHallway");
+
+    //disable/enable directions
+    enableAllDirections();
+    disableDirection("east");
+    disableDirection("west");
+}
+
+
+/*function longHall(){
+    var setMsg = "Leaving the artwork hallway, you enter another hallway. This one is painted a sickening green color and has mold growing on the ceiling. It's absolutely disgusting here.";
+    updateDisplay(setMsg);
+    updateScore(10);
+
+    //do some enable/disable directions
+    enableAllDirections();
+    disableDirection("west");
+    disableDirection("south");
+}
+*/
 
 //enter cellar if and ONLY IF they are in the kitchen. If they are not coming from the kitchen, throw invalid command error
 function enterCellar(){ 
