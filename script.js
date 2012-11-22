@@ -331,6 +331,7 @@ function listCommands(){
     updateDisplay(setMsg);
 }
 
+//this is for the command box for users who want to enter commands via text instead of the directional buttons
 function enterCommand(){
     var validCommands = ["north","south","east","west","n","s","e","w","enter cellar","commands", "take paper", "view painting", "exit cellar", "take painting", "take key"];
     var inputCmd = document.getElementById("commandBox").value; //set command to the value that was entered in commandBox
