@@ -22,6 +22,8 @@ var inventory = []; //initialize the inventory for the user
 
 var currentLocation = "home"; //current location of the user. Initialized as home.
 
+var numMoves = 0; //initialize variable for number of moves. 
+
 
 //the init() function is called from the body when it loads. It will set the initial text inside the output textarea
 function init(){
@@ -173,95 +175,161 @@ function disableDirection(dir){
 
 }
 
+function enableDirection(dir){
+        switch(dir){
+
+        case "north":
+            $('#northButton').removeAttr('disabled');
+            break;
+        case "south":
+            $('#southButton').removeAttr('disabled');
+            break;
+
+        case "east":
+            $('#eastButton').removeAttr('disabled');
+            break;
+
+        case "west":
+            $('#westButton').removeAttr('disabled');
+            break;
+
+        default:
+            $("#northButton");
+            break;
+    }
+}
 
 /*
 Following 4 functions are called when the user presses buttons representing north, south, east, or west. Text is then input into textarea. 
 */
 function btn_goNorth(){
+
+    var direction = "north";
+
+    if(locationMatrix[currentLocation][direction] !== -1){
+        updateDisplay(locationMatrix[currentLocation][direction]);
+        currentLocation = locationMatrix[currentLocation][direction].name; //this successfully changes the current location to what "name" is set as in the playerLocation prototype.
+        checkNavButtons(currentLocation);
+    } 
     
-    if(hasVisited("library") === false && currentLocation === "home"){
-        libraryMain();
-        updateScore();
-    }
-    else if(currentLocation === "library" && hasVisited("northendLibrary") === false){
-         northEndLibrary();
-         updateScore();
-    }
-    else if(currentLocation === "library" && hasVisited("northendLibrary") === true){
-         northEndLibrary();
-    }
-    else if(currentLocation === "southArtHallway"){
-        artHall();
-    }
-    else if(currentLocation === "artHall" || currentLocation === "painting"){
-        startingLocation();
-    }
-    else{
-         libraryMain();
-    }
+    // if(hasVisited("library") === false && currentLocation === "home"){
+    //     libraryMain();
+    //     updateScore();
+    // }
+    // else if(currentLocation === "library" && hasVisited("northendLibrary") === false){
+    //      northEndLibrary();
+    //      updateScore();
+    // }
+    // else if(currentLocation === "library" && hasVisited("northendLibrary") === true){
+    //      northEndLibrary();
+    // }
+    // else if(currentLocation === "southArtHallway"){
+    //     artHall();
+    // }
+    // else if(currentLocation === "artHall" || currentLocation === "painting"){
+    //     startingLocation();
+    // }
+    // else{
+    //      libraryMain();
+    // }
 }
 
 function btn_goSouth(){
     
-    if(currentLocation === "northendLibrary"){
-         libraryMain();
-    }
-    else if(currentLocation === "library"){
-        startingLocation();
-    }
-    else if(hasVisited("artHall") === false && currentLocation === "home"){
-        artHall();
-        updateScore();
-    }
-    else if(currentLocation === "artHall" || currentLocation === "painting"){
-        southArtHallway();
-    }
-    else{
-        artHall();
-    }
+
+    var direction = "south";
+
+    if(locationMatrix[currentLocation][direction] !== -1){
+        updateDisplay(locationMatrix[currentLocation][direction]);
+        currentLocation = locationMatrix[currentLocation][direction].name; //this successfully changes the current location to what "name" is set as in the playerLocation prototype.
+        checkNavButtons(currentLocation);
+    } 
+
+    // if(currentLocation === "northendLibrary"){
+    //      libraryMain();
+    // }
+    // else if(currentLocation === "library"){
+    //     startingLocation();
+    // }
+    // else if(hasVisited("artHall") === false && currentLocation === "home"){
+    //     artHall();
+    //     updateScore();
+    // }
+    // else if(currentLocation === "artHall" || currentLocation === "painting"){
+    //     southArtHallway();
+    // }
+    // else{
+    //     artHall();
+    // }
 }
 
 function btn_goEast(){
         
-    if(currentLocation === "kitchen"){
-        startingLocation();
-    }
-    else if(currentLocation === "artHall" && hasVisited("painting") === false){
-        viewPainting();
-        updateScore(15);
-    }
-    else if(currentLocation === "artHall"){
+    var direction = "east";
 
-        viewPainting();
-    }
-    else if (currentLocation === "painting"){
-        tunnel();
-    }
-    else if(currentLocation === "home" && hasVisited("windowWall") === false){
-        updateScore();
-        windowWall();
-    }
-    else{
-        windowWall();
+    if(locationMatrix[currentLocation][direction] !== -1){
+        updateDisplay(locationMatrix[currentLocation][direction]);
+        currentLocation = locationMatrix[currentLocation][direction].name; //this successfully changes the current location to what "name" is set as in the playerLocation prototype.
+        checkNavButtons(currentLocation);
+    } 
 
-    }
+
+    // if(currentLocation === "kitchen"){
+    //     startingLocation();
+    // }
+    // else if(currentLocation === "artHall" && hasVisited("painting") === false){
+    //     viewPainting();
+    //     updateScore(15);
+    // }
+    // else if(currentLocation === "artHall"){
+
+    //     viewPainting();
+    // }
+    // else if (currentLocation === "painting"){
+    //     tunnel();
+    // }
+    // else if(currentLocation === "home" && hasVisited("windowWall") === false){
+    //     updateScore();
+    //     windowWall();
+    // }
+    // else{
+    //     windowWall();
+
+    // }
 }
+function
+ btn_goWest(){
 
-function btn_goWest(){
-    if(currentLocation === "windowWall"){
-        startingLocation();
-    }
-    else if(currentLocation === "tunnel"){
-        viewPainting();
-    }
-    else if(currentLocation === "home" && hasVisited("kitchen") === false){ //have they visited the kitchen? If not, add to their score. If they have visited, do not add points to their score. 
-        updateScore();
-        kitchen();
-    }
-    else{
-        kitchen();
-    }
+    var direction = "west";
+
+    if(locationMatrix[currentLocation][direction] !== -1){
+        updateDisplay(locationMatrix[currentLocation][direction]);
+        currentLocation = locationMatrix[currentLocation][direction].name; //this successfully changes the current location to what "name" is set as in the playerLocation prototype.
+        checkNavButtons(currentLocation);
+    } 
+
+    // if(currentLocation === "windowWall"){
+    //     startingLocation();
+    // }
+    // else if(currentLocation === "tunnel"){
+    //     viewPainting();
+    // }
+    // else if(currentLocation === "home" && hasVisited("kitchen") === false){ //have they visited the kitchen? If not, add to their score. If they have visited, do not add points to their score. 
+    //     updateScore();
+    //     kitchen();
+    // }
+    // else{
+    //     kitchen();
+    // }
 }   
+
+
+function listInventory(){
+    for(i=0; i<inventory.length;i++){
+        updateDisplay("-"+inventory[i]);
+    }
+    updateDisplay("Inventory:");
+}
 
 function takePaper(){
 
@@ -291,9 +359,13 @@ function takePainting(){
         updateScore(15);
         updateDisplay(setMsg);
 
+        currentLocation = "holeInWall";
+        enableDirection("east");
+
+
         //enable/disable directions
-        enableAllDirections();
-        disableDirection("west");
+        // enableAllDirections();
+        // disableDirection("west");
 
         //add painting to inventory
         var item = "painting";
@@ -311,7 +383,7 @@ function takePainting(){
 
 function takeKey(){
     if(currentLocation === "tunnel" && !hasItem("key")){
-        var setMsg = "You take the skeleton key. It has the word 'escape' engraved on the handle and looks quite old.";
+        var setMsg = "You take the skeleton key. It has the word 'escape' engraved on the handle and looks quite old. You should probably take this now. It doesn't seem like you'll be able to get back in here!";
         updateScore(20);
         updateDisplay(setMsg);
 
@@ -327,13 +399,13 @@ function takeKey(){
 }
 
 function listCommands(){
-    var setMsg = "Here are some valid commands: \n\n Directions can be written as the full word, North, or as the first letter, N. Action commands to go to certain areas follow the syntax 'enter ____' ";
+    var setMsg = "Here are some valid commands: \n\n Directions can be written as the full word, North, or as the first letter, N. Action commands to go to certain areas follow the syntax 'enter ____'. \nTaking items requires using take ____ syntax. \nView inventory by typing inventory or clicking the plus icon. ";
     updateDisplay(setMsg);
 }
 
 //this is for the command box for users who want to enter commands via text instead of the directional buttons
 function enterCommand(){
-    var validCommands = ["north","south","east","west","n","s","e","w","enter cellar","commands", "take paper", "view painting", "exit cellar", "take painting", "take key"];
+    var validCommands = ["north","south","east","west","n","s","e","w","enter cellar","commands", "take paper", "view painting", "exit cellar", "take painting", "take key", "inventory"];
     var inputCmd = document.getElementById("commandBox").value; //set command to the value that was entered in commandBox
 
     if(validCommands.indexOf(inputCmd.toLowerCase()) != -1){ //convert string to lowercase, then determine if command is valid by searching validCommands array
@@ -397,6 +469,10 @@ function enterCommand(){
 
             case "take key":
                 takeKey();
+                break;
+
+            case "inventory":
+                listInventory();
                 break;
 
             default:
