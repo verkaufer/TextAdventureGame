@@ -22,8 +22,6 @@ var inventory = []; //initialize the inventory for the user
 
 var currentLocation = "home"; //current location of the user. Initialized as home.
 
-var numMoves = 0; //initialize variable for number of moves. 
-
 
 //the init() function is called from the body when it loads. It will set the initial text inside the output textarea
 function init(){
@@ -35,7 +33,7 @@ function updateScore(setPoints){
                 
     var addPoints; // value of points to be added to player's score
                 
-    if(setPoints == null){ //if the passed parameter is null, set default addPoints to 5
+    if(setPoints === null){ //if the passed parameter is null, set default addPoints to 5
         addPoints = 5;
     }
     else{
@@ -55,7 +53,7 @@ function addVisited(location){ //add location user just visited to the visitedLo
 // the below code was sourced from Extreme Web Designs.com
 function hasVisited(location){  //checks to see if user has already visited this location
     
-    if(vistedLocs.indexOf(location) != -1){ //find if user has visted the passed location var already
+    if(vistedLocs.indexOf(location) !== -1){ //find if user has visted the passed location var already
         return true;
     }
     else{
@@ -90,7 +88,7 @@ function itemObj(_id, _name, _description){
 
         returnVariable = this.description + "\n You earned " + this.points +" points.";
         return returnVariable;
-    }
+    };
 }
 
 //updateInventory will take the item name and either add it to the inventory array if action = add or delete if action = delete

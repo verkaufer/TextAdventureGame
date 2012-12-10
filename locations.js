@@ -18,7 +18,7 @@ function playerLocation(_id, _name, _description, _points) {
 
 
     }
-}
+};
 
 
 //globalLocations[] holds all the location closures/prototypes. 
@@ -135,7 +135,7 @@ var locationMatrix = {
         east:-1,
         west:-1
     }
-}
+};
 
 
 //this function was made with the help of some outside consultation on SomethingAwful forums... I understood that I needed to have 2 nested loops for my object, but I was having trouble wrapping my head around the concept. 
@@ -158,7 +158,7 @@ var locationMatrix = {
                     }
                 }
             }
-        })
+        });
 
     }
 
@@ -191,7 +191,7 @@ var locationMatrix = {
             disableDirection("south");
             disableDirection("west");
             disableDirection("east");
-        } else if (currentLocation != "kitchen") {
+        } else if (currentLocation !== "kitchen") {
             setMsg = "Invalid command. Please try another command.";
             updateDisplay(setMsg);
         }
